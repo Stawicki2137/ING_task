@@ -46,3 +46,16 @@ pytest test_ing_analytical_cookies.py -s
 
 ## Configuration Details
 **The test is configured to ignore HTTPS errors to ensure stability across all browser engines, especially WebKit.**
+
+## CI/CD Execution & Bot Protection
+The automated tests currently **fail on GitHub Actions** while passing successfully on a **local environment**.
+
+### Why is this happening?
+The production website `ing.pl` employs an advanced **Web Application Firewall** and **hCaptcha** protection. 
+- **CI/CD Run:** GitHub Actions runners use data center IP addresses (Azure), which are automatically flagged as "suspicious/bot traffic" by the bank's security systems, triggering a human verification challenge.
+
+### My Approach (Diagnostic & Robustness)
+Instead of ignoring the failure, the project includes several features:
+1. **Diagnostic Logs:** The test includes a pre-condition check. If hCaptcha is detected, it prints a clear warning in the console instead of just failing on a missing element.
+2. **Automated Artifacts:** The CI/CD pipeline is configured to capture screenshots **only on failure**, allowing for quick visual debugging of environmental blocks.
+3. **Localization Handling:** The test forces the `pl-PL` locale and timezone to ensure consistent behavior regardless of the runner's physical location.

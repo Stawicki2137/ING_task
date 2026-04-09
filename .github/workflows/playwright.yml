@@ -32,3 +32,10 @@ jobs:
 
       - name: Run tests
         run: pytest test_ing_analytical_cookies.py --browser ${{ matrix.browser }} -s
+      
+      - name: Upload screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-${{ matrix.browser }}
+          path: after_goto.png

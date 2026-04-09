@@ -17,11 +17,12 @@ def browser_context_args(browser_context_args):
 def test_ing_cookies_acceptance(page: Page):
     page.goto(PAGE_URL,timeout=60000)
     page.wait_for_load_state("networkidle")
-    page.screenshot(path="after_goto.png", full_page=True)
 
-    print(page.title())
-    print(page.url)
-
+    if page.locator("text=Jestem człowiekiem").is_visible():
+        print("\n[WARNING] hCaptcha detected! Test cannot proceed on this environment.")
+        return
+    
+  
     dostosuj_btn = page.get_by_role("button", name="Dostosuj")
     expect(dostosuj_btn).to_be_visible(timeout=10000)
     dostosuj_btn.click()

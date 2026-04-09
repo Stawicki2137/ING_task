@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -31,11 +31,11 @@ jobs:
         run: playwright install --with-deps
 
       - name: Run tests
-        run: pytest test_ing_analytical_cookies.py --browser ${{ matrix.browser }} -s
-      
-      - name: Upload screenshot
+        run: pytest test_ing_analytical_cookies.py --browser ${{ matrix.browser }} -s --screenshot only-on-failure --output test-results
+
+      - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: screenshot-${{ matrix.browser }}
-          path: after_goto.png
+          name: test-results-${{ matrix.browser }}
+          path: test-results/

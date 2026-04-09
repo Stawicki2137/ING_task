@@ -45,4 +45,4 @@ pytest test_ing_analytical_cookies.py -s
 ```
 
 ## Configuration Details
-**The test is configured to ignore HTTPS errors (ignore_https_errors: True) to ensure stability across all browser engines, especially WebKit.**
+**The test is configured to ignore HTTPS errors to ensure stability across all browser engines, especially WebKit.**

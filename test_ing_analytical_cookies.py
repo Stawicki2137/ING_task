@@ -9,12 +9,17 @@ EXPECTED_COOKIE_VALUE = "3"
 def browser_context_args(browser_context_args):
     return {
         **browser_context_args,
-        "ignore_https_errors": True
+        "ignore_https_errors": True,
+        "locale": "pl-PL",
+        "timezone_id": "Europe/Warsaw",
     }
 
 def test_ing_cookies_acceptance(page: Page):
     page.goto(PAGE_URL,timeout=60000)
 
+    print(page.title())
+    print(page.url)
+    
     dostosuj_btn = page.get_by_role("button", name="Dostosuj")
     expect(dostosuj_btn).to_be_visible(timeout=10000)
     dostosuj_btn.click()
